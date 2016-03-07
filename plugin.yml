@@ -1,0 +1,21 @@
+name: SVAdminChat
+main: fr.zankia.SVAdminChat.SVAC
+version: 1.1
+description: Light chat for administrators
+author: zankia
+
+commands:
+  svadminchat:
+    description: Plugin management command.
+    aliases: [svac]
+    usage: /svadminchat reload
+
+permissions:
+  svadminchat.*:
+    children:
+      svadminchat.admin: true
+      svadminchat.user: true
+  svadminchat.admin:
+    description: Allows managing the plugin.
+  svadminchat.user:
+    description: Allows using the admin chat.
