@@ -1,4 +1,4 @@
-package fr.zankia.SVAdminChat;
+package fr.zankia.svadminchat;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
