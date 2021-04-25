@@ -1,0 +1,26 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+apply plugin: 'java'
+
+group 'fr.zankia.svadminchat'
+version '1.2'
+description 'Light chat for administrators'
+
+repositories {
+    maven { url = 'https://papermc.io/repo/repository/maven-public/' }
+}
+
+dependencies {
+    compileOnly 'com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT'
+}
+
+processResources {
+    filter(ReplaceTokens, tokens: [
+            name: project.name,
+            main: project.group + '.SVAC',
+            description: project.description,
+            version: version,
+            api: '1.16',
+            author: 'zankia'
+    ])
+}

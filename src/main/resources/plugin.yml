@@ -1,8 +1,9 @@
-name: SVAdminChat
-main: fr.zankia.SVAdminChat.SVAC
-version: 1.1
-description: Light chat for administrators
-author: zankia
+name: @name@
+main: @main@
+description: @description@
+version: @version@
+api-version: @api@
+author: @author@
 
 commands:
   svadminchat:
