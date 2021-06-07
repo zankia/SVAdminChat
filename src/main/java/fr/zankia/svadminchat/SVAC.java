@@ -8,8 +8,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -50,21 +50,32 @@ public class SVAC extends JavaPlugin implements Listener {
         return false;
     }
 
-    @EventHandler(priority=EventPriority.NORMAL)
+    @EventHandler
     public void onChat(AsyncChatEvent evt) {
         String message = ((TextComponent) evt.message()).content();
         if (message.startsWith(this.identificator)
                 && (evt.getPlayer().hasPermission("svadminchat.user"))) {
-            String newMessage = ChatColor.translateAlternateColorCodes('&',
-                    this.chatPrefix).replace("{player}", evt.getPlayer().getName())
-                    + message.substring(this.identificator.length());
-
-            for (Player p : Bukkit.getOnlinePlayers())
-                if (p.hasPermission("svadminchat.user"))
-                    p.sendMessage(newMessage);
+            evt.setCancelled(true);
+            sendAdminMessage(evt.getPlayer().getName(), message);
 
             getLogger().info(evt.getPlayer().getName() + ": " + message);
+        }
+    }
+
+    @EventHandler
+    public void onDeprecatedChat(AsyncPlayerChatEvent evt) {
+        if (evt.getMessage().startsWith(this.identificator) && evt.getPlayer().hasPermission("svadminchat.user")) {
             evt.setCancelled(true);
         }
+    }
+
+    private void sendAdminMessage(String playerName, String message) {
+        String newMessage = ChatColor.translateAlternateColorCodes('&',
+                this.chatPrefix).replace("{player}", playerName)
+                + message.substring(this.identificator.length());
+
+        for (Player p : Bukkit.getOnlinePlayers())
+            if (p.hasPermission("svadminchat.user"))
+                p.sendMessage(newMessage);
     }
 }
